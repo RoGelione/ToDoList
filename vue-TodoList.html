@@ -56,12 +56,10 @@
 			flex: 1;
 		}
 		.reMove{
-			width: 22px;
-		    height: 20px;
-		    background: #d3d3d3;
 		    border-radius: 20px;
-		    font-size: 50px;
-		    line-height: 20px;
+		    font-size: 16px;
+		    line-height: 19px;
+		    color: red;
 		    text-align: center;
 		    cursor: pointer;
 		}
@@ -84,7 +82,7 @@
 							<div :id='index' :dcp='task.cp' class='zd'>
 								<input type="checkbox"  @click='moveTask' />
 								<div class="select"><p>{{task.name}}</p></div>
-								<span class="reMove" @click='RemoveTask'>-</span>
+								<span class="reMove" @click='RemoveTask'>删除</span>
 							</div>
 						</li>
 					</ul>
@@ -100,7 +98,7 @@
 							<div :id='index' :dcp='task.cp' class='zd'>
 								<input type="checkbox"  checked="checked" @click='moveTask'/>
 								<div class="select"><p>{{task.name}}</p></div>
-								<span class="reMove" @click='RemoveTask'>-</span>
+								<span class="reMove" @click='RemoveTask'>删除</span>
 							</div>
 						</li>
 					</ul>
