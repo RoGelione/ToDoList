@@ -131,4 +131,4 @@ Vue.prototype.move = function(val,jd,cp){//移动函数
 		}
 	}
 }
-console.log(制作 by 天汇https://rogelione.github.io);
+console.log("制作 by 天汇https://rogelione.github.io");
