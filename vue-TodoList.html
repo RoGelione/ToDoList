@@ -39,7 +39,8 @@
 			display: flex;
 			flex-direction: column;
 		}
-		.wantTo ul li,.isOk ul li{
+		.wantTo ul li .zd,.isOk ul li .zd{
+			position: relative;
 			display: flex;
 			align-items: center;
 			border:1px solid #42B983;
@@ -55,21 +56,21 @@
 			flex: 1;
 		}
 		.reMove{
-			width: 20px;
-			height: 20px;
-			background: #d3d3d3;
-			border-radius: 20px;
-			font-size: 50px;
-			line-height: 15px;
-			text-align: center;
-			cursor: pointer;
+			width: 22px;
+		    height: 20px;
+		    background: #d3d3d3;
+		    border-radius: 20px;
+		    font-size: 50px;
+		    line-height: 10px;
+		    text-align: center;
+		    cursor: pointer;
 		}
 	</style>
 	<body style="min-width: 850px;">
 		<div id="app">
 		<div class="toAdd">
 			<span>添加您的任务：</span>
-			<input type="text" v-model="task.name" @keyup.enter='AddTask' /><!--焦点在input上，则键盘事件要绑定在input上-->
+			<input type="text" v-model="newname" @keyup.enter='AddTask' /><!--焦点在input上，则键盘事件要绑定在input上-->
 			<input type="button" value="添加"  @click='AddTask' />
 		</div>
 		<div class="list">
@@ -79,12 +80,12 @@
 				</span>
 				<div class="wantTo">
 					<ul>
-						<li v-for="(task,index) in AllTask">
-							<div class="select">
-								<input type="checkbox"  @click='toOverTask(index)' />
-								<p>{{task.name}}</p>
+						<li v-for="(task,index) in CpTask">
+							<div :id='index' :dcp='task.cp' class='zd'>
+								<input type="checkbox"  @click='moveTask' />
+								<div class="select"><p>{{task.name}}</p></div>
+								<span class="reMove" @click='RemoveTask'>-</span>
 							</div>
-							<span class="reMove" @click='RemoveTask(index)'>-</span>
 						</li>
 					</ul>
 				</div>
@@ -96,11 +97,11 @@
 				<div class="isOk">
 					<ul>
 						<li v-for="(task,index) in OverTask">
-							<div class="select">
-								<input type="checkbox"  checked="checked"@click='toAllTask(index)'/>
-								<p>{{task.name}}</p>
+							<div :id='index' :dcp='task.cp' class='zd'>
+								<input type="checkbox"  checked="checked" @click='moveTask'/>
+								<div class="select"><p>{{task.name}}</p></div>
+								<span class="reMove" @click='RemoveTask'>-</span>
 							</div>
-							<span class="reMove" @click='RemoveOverTask(index)'>-</span>
 						</li>
 					</ul>
 				</div>
