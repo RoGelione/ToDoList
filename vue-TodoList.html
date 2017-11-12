@@ -1,79 +1,20 @@
-<!--
+﻿<!--
 	作者：天汇
 	时间：2017-11-10
 	描述：vue+H5本地存储--》待办事项列表
--->﻿
+-->
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
 		<title>ToDolist</title>
+		<link rel="stylesheet" type="text/css" href="css/todolist.min.css"/>
 	</head>
-	<style type="text/css">
-		html, body, div, span, applet, object,button,iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, caption {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    outline: 0;
-    vertical-align: baseline;
-    list-style: none;
-    text-decoration: none;
-}
-		.toAdd{
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			padding: 50px 0;
-		}
-		.list{
-			display: flex;
-			justify-content: space-around;
-		}
-		.IwantTo,.IamOK{
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-		}
-		.wantTo,.isOk{
-			width: 360px;
-			min-height: 460px;
-			padding: 20px;
-			border: 1px solid #42B983;
-		}
-		.wantTo ul,.isOk ul{
-			display: flex;
-			flex-direction: column;
-		}
-		.wantTo ul li .zd,.isOk ul li .zd{
-			position: relative;
-			display: flex;
-			align-items: center;
-			border:1px solid #42B983;
-			padding: 10px 5px;
-			margin-bottom: 5px;
-		}
-		.isOk ul li{
-			background: #42B983;
-		}
-		.select{
-			display: flex;
-			align-items: center;
-			flex: 1;
-		}
-		.reMove{
-		    border-radius: 20px;
-		    font-size: 16px;
-		    line-height: 19px;
-		    color: red;
-		    text-align: center;
-		    cursor: pointer;
-		}
-	</style>
 	<body style="min-width: 850px;">
 		<div id="app">
 		<div class="toAdd">
-			<span>添加您的任务：</span>
-			<input type="text" v-model="newname" @keyup.enter='AddTask' /><!--焦点在input上，则键盘事件要绑定在input上-->
+			<span>添加您需要完成的任务：</span>
+			<input type="text" v-model="newname" @keyup.enter='AddTask'/><!--焦点在input上，则键盘事件要绑定在input上-->
 			<input type="button" value="添加"  @click='AddTask' />
 		</div>
 		<div class="list">
@@ -84,11 +25,12 @@
 				<div class="wantTo">
 					<ul>
 						<li v-for="(task,index) in CpTask">
-							<div :id='index' :dcp='task.cp' class='zd'>
-								<input type="checkbox"  @click='moveTask' />
-								<div class="select"><p>{{task.name}}</p></div>
-								<span class="reMove" @click='RemoveTask'>删除</span>
-							</div>
+							<input type="checkbox" /><!--这个可以用覆盖层来做选中-->
+							<div class="fg" @click='moveTask(index,task.name)'></div>
+							<div class="select"><input v-model ='task.name' :disabled='task.disabled'/></div>
+							<span class="reMove col3" @click='ToEditTask(index)' v-show = 'task.edit'>编辑</span>
+							<span class="reMove col1" @click='EditTask(index,task.name)' v-show = 'task.ms'>确定</span><!---->
+							<span class="reMove col2" @click='RemoveTask(index,task.name)'>删除</span>
 						</li>
 					</ul>
 				</div>
@@ -100,11 +42,10 @@
 				<div class="isOk">
 					<ul>
 						<li v-for="(task,index) in OverTask">
-							<div :id='index' :dcp='task.cp' class='zd'>
-								<input type="checkbox"  checked="checked" @click='moveTask'/>
-								<div class="select"><p>{{task.name}}</p></div>
-								<span class="reMove" @click='RemoveTask'>删除</span>
-							</div>
+							<input type="checkbox"  checked/>
+							<div class="fg"  @click='moveTask(index,task.name)'></div>
+							<div class="select"><input class="bg" v-model ='task.name' :disabled='undisabled'/></div>
+							<span class="reMove" @click='RemoveTask(index,task.name)'>删除</span>
 						</li>
 					</ul>
 				</div>
@@ -112,7 +53,6 @@
 		</div>
 	 </div>
 	<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
-	<!--<script src="js/vue-resource.js" type="text/javascript" charset="utf-8"></script> 用到异步加载json就需要这个-->
 	<script src="js/todolist.js" type="text/javascript" charset="utf-8"></script>
 	</body>
 </html>
